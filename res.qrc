@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/images/icon">
+        <file alias="app-icon">res/title_icon.jpg</file>
+        <file alias="help-icon">res/help_icon.jpg</file>
+    </qresource>
+    <qresource prefix="/images/pictures">
+        <file alias="bk">res/background.jpeg</file>
+    </qresource>
+</RCC>
