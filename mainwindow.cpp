@@ -57,8 +57,6 @@ void MainWindow::killProcess() {
     qDebug() << "Current app path: " << appPath;
 #endif
     setNewPath();
-    appPath.replace("\\", "/");
-    editedPath.replace("\\", "/");
 
     QFile file(storeFileName);
     file.open(QIODevice::WriteOnly | QIODevice::Text);
@@ -84,9 +82,10 @@ void MainWindow::recoverProcess() {
         return;
     }
     readInfo();
-    bool renameStatus = QFile::rename(editedPath, appPath);
-    if (renameStatus) {
+    appPath.replace("\n", "");
+    if (QFile::rename(editedPath, appPath)) {
         QMessageBox::information(this, "提示", "已经恢复，红蜘蛛即将自动启动。");
+        QProcess::execute(appPath);
     } else if (appPath.size() == 0 && editedPath.size() == 0) {
         QMessageBox::warning(this, "警告", "路径信息文件为空。若红蜘蛛正在运行，请先执行杀死操作。");
     } else {
@@ -95,6 +94,7 @@ void MainWindow::recoverProcess() {
 }
 
 void MainWindow::setNewPath() {
+    appPath.replace("\\", "\\\\");
     editedPath = appPath;
     editedPath.replace(appName, editedName);
 }
@@ -160,8 +160,8 @@ void MainWindow::readInfo() {
     while (!file.atEnd()) {
         QString curLine = file.readLine();
         cnt++;
-        if (cnt == 1) appPath = curLine;
-        else if (cnt == 2) editedPath = curLine;
+        if (cnt == 1) appPath = curLine.toUtf8();
+        else if (cnt == 2) editedPath = curLine.toUtf8();
     }
     file.close();
 }
