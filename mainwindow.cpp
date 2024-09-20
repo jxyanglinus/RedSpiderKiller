@@ -57,8 +57,8 @@ void MainWindow::killProcess() {
     qDebug() << "Current app path: " << appPath;
 #endif
     setNewPath();
-    appPath.replace("\\", "\\\\");
-    editedPath.replace("\\", "\\\\");
+    appPath.replace("\\", "/");
+    editedPath.replace("\\", "/");
 
     QFile file(storeFileName);
     file.open(QIODevice::WriteOnly | QIODevice::Text);
@@ -80,20 +80,15 @@ void MainWindow::killProcess() {
 
 void MainWindow::recoverProcess() {
     if (!QFile::exists(storeFileName)) {
-        QMessageBox::warning(this, "警告", "路径文件不存在或已删除，无法自动恢复进程，请手动恢复。");
+        QMessageBox::warning(this, "警告", "路径信息文件不存在或已删除，无法自动恢复进程，请手动恢复。");
         return;
     }
-    QFile file(storeFileName);
-    int cnt = 0;
-    while (!file.atEnd()) {
-        QString curLine = file.readLine();
-        cnt++;
-        if (cnt == 1) appPath = curLine;
-        else if (cnt == 2) editedPath = curLine;
-    }
+    readInfo();
     bool renameStatus = QFile::rename(editedPath, appPath);
     if (renameStatus) {
         QMessageBox::information(this, "提示", "已经恢复，红蜘蛛即将自动启动。");
+    } else if (appPath.size() == 0 && editedPath.size() == 0) {
+        QMessageBox::warning(this, "警告", "路径信息文件为空。若红蜘蛛正在运行，请先执行杀死操作。");
     } else {
         QMessageBox::warning(this, "警告", "恢复失败（或红蜘蛛正在正常运行）");
     }
@@ -153,6 +148,22 @@ QString MainWindow::getProcessPath(const DWORD &pid) {
         CloseHandle(hProcess);
     }
     return QString::fromWCharArray(name);
+}
+
+void MainWindow::readInfo() {
+    if (!QFile::exists(storeFileName)) {
+        return;
+    }
+    QFile file(storeFileName);
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    int cnt = 0;
+    while (!file.atEnd()) {
+        QString curLine = file.readLine();
+        cnt++;
+        if (cnt == 1) appPath = curLine;
+        else if (cnt == 2) editedPath = curLine;
+    }
+    file.close();
 }
 
 MainWindow::~MainWindow() {

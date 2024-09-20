@@ -59,5 +59,6 @@ private:
     void recoverProcess(); // 恢复红蜘蛛
     void getHelp(); // 帮助界面
     void setNewPath(); // 得到更改名称后的红蜘蛛的完全路径
+    void readInfo(); // 从文件读取信息
 };
 #endif // MAINWINDOW_H
