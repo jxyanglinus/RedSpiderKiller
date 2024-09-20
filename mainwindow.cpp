@@ -15,14 +15,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QMenu *helpMenu = menuBar()->addMenu("关于程序");
     helpMenu->addAction(helpAction);
 
-    killButton = new QPushButton("杀掉红蜘蛛");
-    recoverButton = new QPushButton("恢复红蜘蛛");
-    killButton->setFont(QFont("Microsoft Yahei UI", 20));
-    recoverButton->setFont(QFont("Microsoft Yahei UI", 20));
+    killButton = new CustomizedButton("杀掉红蜘蛛");
+    recoverButton = new CustomizedButton("恢复红蜘蛛");
 
     connect(helpAction, &QAction::triggered, this, &MainWindow::getHelp);
-    connect(killButton, &QPushButton::clicked, this, &MainWindow::killProcess);
-    connect(recoverButton, &QPushButton::clicked, this, &MainWindow::recoverProcess);
+    connect(killButton, &CustomizedButton::clicked, this, &MainWindow::killProcess);
+    connect(recoverButton, &CustomizedButton::clicked, this, &MainWindow::recoverProcess);
 
     layout = new QVBoxLayout;
     layout->addWidget(killButton);
