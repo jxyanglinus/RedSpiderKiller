@@ -15,6 +15,7 @@
 #include <QProcess>
 #include <QLabel>
 #include <QtWinExtras/QtWinExtras>
+#include <QStandardPaths>
 #include <windows.h>
 #include <tlhelp32.h>
 #include <psapi.h>
@@ -36,7 +37,8 @@ private:
                              "作为刚刚开始接触 Qt 的新手，程序做的很简陋，也肯定有很多问题，\n"
                              "欢迎友好讨论，愿和大家一起进步！\n\n"
                              "--来自即将退役的 Loser 竞赛生";
-    const QString storeFileName = "$env:USERPROFILE\\.red_spider_path_file.inf"; // 本程序将路径信息存储于此
+    const QString storeFileName = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
+                                  + "\\.red_spider_path_file.inf"; // 本程序将路径信息存储于此
     const QString appName = "REDAgent.exe"; // 红蜘蛛本名
     const QString editedName = "StupidAgent.exe"; // 更改后名称
     TCHAR tcAppName[13] = _T("REDAgent.exe"); // 用于寻找红蜘蛛进程
