@@ -1,12 +1,17 @@
 #include "mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
-    this->setWindowTitle(tr("红蜘蛛电子教室终结者"));
+    this->setWindowTitle(tr("红蜘蛛电子教室杀手"));
     this->setWindowIcon(QIcon(tr(":/images/icon/app-icon")));
     this->setMaximumHeight(576);
     this->setMaximumWidth(576);
     this->setMinimumHeight(576);
     this->setMinimumWidth(576);
+
+    QPixmap pixmap = QPixmap(":/images/pictures/bk").scaled(this->size()); // 贴张背景图 :)
+    QPalette palette;
+    palette.setBrush(QPalette::Window, QBrush(pixmap));
+    this->setPalette(palette);
 
     helpAction = new QAction(QIcon(tr(":/images/icon/help-icon")), "帮助", this);
     helpAction->setShortcut(QKeySequence::HelpContents);
@@ -34,13 +39,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
 void MainWindow::getHelp() {
     QDialog *helpDialog = new QDialog(this);
-    QLabel *label = new QLabel(helpDialog);
+    QHBoxLayout *dialogLayout = new QHBoxLayout(helpDialog);
+    QLabel *label = new QLabel;
+
+    dialogLayout->addWidget(label);
 
     helpDialog->setAttribute(Qt::WA_DeleteOnClose);
-    helpDialog->setMinimumHeight(220);
-    helpDialog->setMinimumWidth(500);
+    helpDialog->setLayout(dialogLayout);
+    helpDialog->setWindowTitle("帮助");
 
-    label->setFont(QFont("Microsoft Yahei UI", 12));
+    label->setFont(QFont("黑体", 10));
     label->setText(helpText);
 
     helpDialog->show();
