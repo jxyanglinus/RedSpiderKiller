@@ -3,12 +3,12 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     this->setWindowTitle(tr("红蜘蛛电子教室杀手"));
     this->setWindowIcon(QIcon(tr(":/images/icon/app-icon")));
-    this->setMaximumHeight(576);
-    this->setMaximumWidth(576);
-    this->setMinimumHeight(576);
-    this->setMinimumWidth(576);
+    this->setMaximumHeight(520);
+    this->setMaximumWidth(520);
+    this->setMinimumHeight(520);
+    this->setMinimumWidth(520);
 
-    QPixmap pixmap = QPixmap(":/images/pictures/bk").scaled(this->size()); // 贴张背景图 :)
+    QPixmap pixmap = QPixmap(":/images/pictures/bk"); // 贴张背景图 :)
     QPalette palette;
     palette.setBrush(QPalette::Window, QBrush(pixmap));
     this->setPalette(palette);
@@ -22,14 +22,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     killButton = new CustomizedButton("杀掉红蜘蛛");
     recoverButton = new CustomizedButton("恢复红蜘蛛");
+    delayButton = new CustomizedButton("定时关闭");
 
     connect(helpAction, &QAction::triggered, this, &MainWindow::getHelp);
     connect(killButton, &CustomizedButton::clicked, this, &MainWindow::killProcess);
     connect(recoverButton, &CustomizedButton::clicked, this, &MainWindow::recoverProcess);
+    connect(delayButton, &CustomizedButton::clicked, this, &MainWindow::delayedOff);
 
     layout = new QVBoxLayout;
     layout->addWidget(killButton);
     layout->addWidget(recoverButton);
+    layout->addWidget(delayButton);
     QWidget *widget = new QWidget;
     widget->setLayout(layout);
     this->setCentralWidget(widget);
@@ -99,6 +102,12 @@ void MainWindow::recoverProcess() {
     } else {
         QMessageBox::warning(this, "警告", "恢复失败（或红蜘蛛正在正常运行）");
     }
+}
+
+void MainWindow::delayedOff() {
+    TimerQueryDlg *dialog = new TimerQueryDlg(this);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    dialog->exec();
 }
 
 void MainWindow::setNewPath() {

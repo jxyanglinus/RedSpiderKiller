@@ -20,6 +20,7 @@
 #include <tlhelp32.h>
 #include <psapi.h>
 #include "customizedbutton.h"
+#include "timerquerydlg.h"
 
 //#define __DEBUG__
 
@@ -33,10 +34,9 @@ private:
                              "若程序无法正常运行，请以管理员身份打开。\n\n"
                              "本程序的原理非常简单：找到红蜘蛛的位置，终止红蜘蛛进程，\n"
                              "然后更改它的名称来防止它极其恶心的自动重启。\n"
-                             "同时会存储红蜘蛛的路径，以便于在必要时恢复红蜘蛛。\n\n"
-                             "作为刚刚开始接触 Qt 的新手，程序做的很简陋，也肯定有很多问题。\n"
-                             "欢迎友好讨论，愿和大家一起进步！\n\n\n"
-                             "--来自即将退役的 Loser 竞赛生";
+                             "同时会存储红蜘蛛的路径，以便于在必要时恢复红蜘蛛。\n"
+                             "另外，本次更新带来全新功能：定时关闭！\n"
+                             "被控制一段时间以规避老师检查，等时间一到就自动解除控制。";
     const QString storeFileName = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
                                   + "\\.red_spider_path_file.inf"; // 本程序将路径信息存储于此
     const QString appName = "REDAgent.exe"; // 红蜘蛛本名
@@ -51,6 +51,7 @@ private:
     QVBoxLayout *layout = nullptr;
     CustomizedButton *killButton = nullptr;
     CustomizedButton *recoverButton = nullptr;
+    CustomizedButton *delayButton = nullptr;
     QAction *helpAction = nullptr;
 private:
     DWORD findProcess(TCHAR name[]); // 判断进程是否存在，存在返回PID，返回1代表不存在
@@ -58,6 +59,7 @@ private:
     void killProcess(); // 杀死红蜘蛛
     void recoverProcess(); // 恢复红蜘蛛
     void getHelp(); // 帮助界面
+    void delayedOff(); // 定时关闭（延时关闭）
     void setNewPath(); // 得到更改名称后的红蜘蛛的完全路径
     void readInfo(); // 从文件读取信息
 };
