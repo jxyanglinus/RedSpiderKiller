@@ -107,7 +107,9 @@ void MainWindow::recoverProcess() {
 void MainWindow::delayedOff() {
     TimerQueryDlg *dialog = new TimerQueryDlg(this);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
-    dialog->exec();
+    if (dialog->exec() == QDialog::Accepted) {
+    } else {
+    }
 }
 
 void MainWindow::setNewPath() {

@@ -8,10 +8,14 @@ TimerQueryDlg::TimerQueryDlg(QWidget *parent, Qt::WindowFlags f) : QDialog(paren
     layout = new QHBoxLayout;
 
     spinBox->setRange(30, 3600);
+    spinBox->setFont(QFont("黑体", 10));
     confirm->setFont(QFont("黑体", 10));
 
     void (QSpinBox::*spinBoxSignal)(int) = &QSpinBox::valueChanged;
     connect(spinBox, spinBoxSignal, this, &TimerQueryDlg::setCountdown);
+    connect(confirm, &QPushButton::clicked, this, &TimerQueryDlg::accept);
+
+    spinBox->setValue(60);
 
     layout->addWidget(spinBox);
     layout->addWidget(confirm);
@@ -20,6 +24,7 @@ TimerQueryDlg::TimerQueryDlg(QWidget *parent, Qt::WindowFlags f) : QDialog(paren
 
 void TimerQueryDlg::setCountdown(int value) {
     countdown = value;
+    emit countdownChanged(countdown);
 }
 
 int TimerQueryDlg::getCountdown() {
