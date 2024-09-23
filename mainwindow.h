@@ -19,6 +19,7 @@
 #include "timerquerydlg.h"
 #include "helpdialog.h"
 #include "processfunc.h"
+#include "delayedoffdlg.h"
 
 //#define __DEBUG__
 

@@ -8,12 +8,21 @@
 #include <QDebug>
 #include <QLayout>
 #include <QFile>
-#include "customizedbutton.h"
+#include <QtWinExtras/QtWinExtras>
+#include <psapi.h>
+#include <tlhelp32.h>
+#include <tchar.h>
+#include <windows.h>
+#include <windef.h>
+#include <QPushButton>
+#include <QMessageBox>
+#include "processfunc.h"
 
 class DelayedOffDlg : public QDialog {
     Q_OBJECT
 public:
     DelayedOffDlg(QWidget *parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
+    void setCountdown(const int &cntdown);
 private:
     int countdown = 0;
     const QString storeFileName = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)
@@ -24,11 +33,11 @@ private:
     QString appPath; // 红蜘蛛路径
     QString editedPath; // 杀死后红蜘蛛软件名称将被修改，并存放于此路径
     // 以下为窗口部件
-    CustomizedButton *startButton = nullptr;
-    QLabel *label = nullptr;
     QVBoxLayout *layout = nullptr;
+    QPushButton *button = nullptr;
 private:
-    void readInfo(); // 从文件读取信息
+    void delayedOffExec();
+    void setNewText();
 };
 
 #endif // DELAYEDOFFDLG_H

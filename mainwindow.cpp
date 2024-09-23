@@ -86,7 +86,6 @@ void MainWindow::recoverProcess() {
     appPath.replace("\n", "");
     if (QFile::rename(editedPath, appPath)) {
         QMessageBox::information(this, "提示", "已经恢复，红蜘蛛即将自动启动。");
-        QProcess::execute(appPath);
     } else if (appPath.size() == 0 && editedPath.size() == 0) {
         QMessageBox::warning(this, "警告", "路径信息文件为空。若红蜘蛛正在运行，请先执行杀死操作。");
     } else {
@@ -95,10 +94,18 @@ void MainWindow::recoverProcess() {
 }
 
 void MainWindow::delayedOff() {
+    if (ProcessFunc::findProcess(tcAppName) == 1) {
+        QMessageBox::information(this, "提示", "红蜘蛛进程不存在。");
+        return;
+    }
     TimerQueryDlg dialog(this);
     if (dialog.exec() == QDialog::Accepted) {
-        countdown = dialog.getCountdown();
-    } else {
+        int countdown = dialog.getCountdown();
+        DelayedOffDlg offDialog;
+        offDialog.setCountdown(countdown);
+        if (offDialog.exec() == QDialog::Rejected) {
+            QMessageBox::information(this, "提示", "已取消");
+        }
     }
 }
 
