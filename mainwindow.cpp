@@ -41,20 +41,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 }
 
 void MainWindow::getHelp() {
-    QDialog *helpDialog = new QDialog(this);
-    QHBoxLayout *dialogLayout = new QHBoxLayout(helpDialog);
-    QLabel *label = new QLabel;
+    HelpDialog *dialog = new HelpDialog(this);
 
-    dialogLayout->addWidget(label);
-
-    helpDialog->setAttribute(Qt::WA_DeleteOnClose);
-    helpDialog->setLayout(dialogLayout);
-    helpDialog->setWindowTitle("帮助");
-
-    label->setFont(QFont("黑体", 10));
-    label->setText(helpText);
-
-    helpDialog->show();
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    dialog->show();
 }
 
 void MainWindow::killProcess() {

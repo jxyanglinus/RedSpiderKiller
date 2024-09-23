@@ -17,12 +17,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     customizedbutton.cpp \
+    helpdialog.cpp \
     main.cpp \
     mainwindow.cpp \
     timerquerydlg.cpp
 
 HEADERS += \
     customizedbutton.h \
+    helpdialog.h \
     mainwindow.h \
     timerquerydlg.h
 
