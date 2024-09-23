@@ -15,8 +15,6 @@ public:
     TimerQueryDlg(QWidget *parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
     void setCountdown(int value);
     int getCountdown();
-signals:
-    void countdownChanged(const int &cntdown);
 private:
     int countdown = 0;
     // 以下为窗口部件

@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QString>
 #include <QLayout>
-#include <tchar.h>
 #include <QAction>
 #include <QMenu>
 #include <QMenuBar>
@@ -16,12 +15,10 @@
 #include <QLabel>
 #include <QtWinExtras/QtWinExtras>
 #include <QStandardPaths>
-#include <windows.h>
-#include <tlhelp32.h>
-#include <psapi.h>
 #include "customizedbutton.h"
 #include "timerquerydlg.h"
 #include "helpdialog.h"
+#include "processfunc.h"
 
 //#define __DEBUG__
 
@@ -46,8 +43,6 @@ private:
     CustomizedButton *delayButton = nullptr;
     QAction *helpAction = nullptr;
 private:
-    DWORD findProcess(TCHAR name[]); // 判断进程是否存在，存在返回PID，返回1代表不存在
-    QString getProcessPath(const DWORD &processId); // 根据 pid 获取进程完全地址
     void killProcess(); // 杀死红蜘蛛
     void recoverProcess(); // 恢复红蜘蛛
     void getHelp(); // 帮助界面

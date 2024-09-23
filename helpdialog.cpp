@@ -1,7 +1,7 @@
 #include "helpdialog.h"
 
 HelpDialog::HelpDialog(QWidget *parent, Qt::WindowFlags f) : QDialog(parent, f) {
-    QHBoxLayout *layout = new QHBoxLayout(this);
+    QHBoxLayout *layout = new QHBoxLayout;
     QLabel *label = new QLabel;
 
     layout->addWidget(label);

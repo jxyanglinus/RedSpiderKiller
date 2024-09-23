@@ -24,7 +24,6 @@ TimerQueryDlg::TimerQueryDlg(QWidget *parent, Qt::WindowFlags f) : QDialog(paren
 
 void TimerQueryDlg::setCountdown(int value) {
     countdown = value;
-    emit countdownChanged(countdown);
 }
 
 int TimerQueryDlg::getCountdown() {
