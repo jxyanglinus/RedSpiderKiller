@@ -3,10 +3,10 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     this->setWindowTitle(tr("红蜘蛛电子教室杀手"));
     this->setWindowIcon(QIcon(tr(":/images/icon/app-icon")));
-    this->setMaximumHeight(520);
-    this->setMaximumWidth(520);
-    this->setMinimumHeight(520);
-    this->setMinimumWidth(520);
+    this->setMaximumHeight(450);
+    this->setMaximumWidth(450);
+    this->setMinimumHeight(450);
+    this->setMinimumWidth(450);
 
     QPixmap pixmap = QPixmap(":/images/pictures/bk"); // 贴张背景图 :)
     QPalette palette;
@@ -21,18 +21,33 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     helpMenu->addAction(helpAction);
 
     CustomizedButton *killButton = new CustomizedButton("杀掉红蜘蛛");
+    killButton->setStatusTip("立即杀死红蜘蛛电子教室");
+
     CustomizedButton *recoverButton = new CustomizedButton("恢复红蜘蛛");
+    recoverButton->setStatusTip("恢复红蜘蛛，并将在不久后自动启动");
+
     CustomizedButton *delayButton = new CustomizedButton("定时关闭");
+    delayButton->setStatusTip("设定一个倒计时，倒计时结束将自动杀死红蜘蛛");
+
+    QCheckBox *topCheck = new QCheckBox("保持为顶层窗口");
+    topCheck->setFont(QFont("黑体", 15));
+    topCheck->setStatusTip("设置为顶层窗口，以便在教师控制时进行仍能杀死红蜘蛛");
 
     connect(helpAction, &QAction::triggered, this, &MainWindow::getHelp);
     connect(killButton, &CustomizedButton::clicked, this, &MainWindow::killProcess);
     connect(recoverButton, &CustomizedButton::clicked, this, &MainWindow::recoverProcess);
     connect(delayButton, &CustomizedButton::clicked, this, &MainWindow::delayedOff);
+    connect(topCheck, &QCheckBox::stateChanged, this, &MainWindow::setWinLevel);
+    topCheck->setChecked(true);
 
-    QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(killButton);
-    layout->addWidget(recoverButton);
-    layout->addWidget(delayButton);
+    QGridLayout *layout = new QGridLayout;
+    layout->addWidget(killButton, 0, 0, 2, 2, Qt::AlignCenter);
+    layout->addWidget(recoverButton, 0, 2, 2, 2, Qt::AlignCenter);
+    layout->addWidget(delayButton, 2, 0, 2, 2, Qt::AlignCenter);
+    layout->addWidget(topCheck, 2, 2, 2, 2, Qt::AlignCenter);
+    layout->setHorizontalSpacing(50);
+    layout->setVerticalSpacing(50);
+    layout->setContentsMargins(25, 25, 25, 25);
     QWidget *widget = new QWidget;
     widget->setLayout(layout);
     this->setCentralWidget(widget);
@@ -106,6 +121,16 @@ void MainWindow::delayedOff() {
         if (offDialog.exec() == QDialog::Rejected) {
             QMessageBox::information(this, "提示", "已取消");
         }
+    }
+}
+
+void MainWindow::setWinLevel(int state) {
+    if (state == Qt::Checked) {
+        this->setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint);
+        this->show();
+    } else if (state == Qt::Unchecked) {
+        this->setWindowFlags(this->windowFlags() & ~Qt::WindowStaysOnTopHint);
+        this->show();
     }
 }
 
