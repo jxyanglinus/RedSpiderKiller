@@ -3,9 +3,9 @@
 TimerQueryDlg::TimerQueryDlg(QWidget *parent, Qt::WindowFlags f) : QDialog(parent, f) {
     this->setWindowTitle("填入定时秒数");
 
-    confirm = new QPushButton("确认");
-    spinBox = new QSpinBox;
-    layout = new QHBoxLayout;
+    QPushButton *confirm = new QPushButton("确认");
+    QSpinBox *spinBox = new QSpinBox;
+    QHBoxLayout *layout = new QHBoxLayout;
 
     spinBox->setRange(30, 3600);
     spinBox->setFont(QFont("黑体", 10));

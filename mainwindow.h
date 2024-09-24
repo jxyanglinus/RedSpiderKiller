@@ -37,12 +37,6 @@ private:
     QString appPath; // 红蜘蛛路径
     QString editedPath; // 杀死后红蜘蛛软件名称将被修改，并存放于此路径
     DWORD pid = 0; // 红蜘蛛pid
-    // 以下为窗口部件
-    QVBoxLayout *layout = nullptr;
-    CustomizedButton *killButton = nullptr;
-    CustomizedButton *recoverButton = nullptr;
-    CustomizedButton *delayButton = nullptr;
-    QAction *helpAction = nullptr;
 private:
     void killProcess(); // 杀死红蜘蛛
     void recoverProcess(); // 恢复红蜘蛛

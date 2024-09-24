@@ -13,23 +13,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     palette.setBrush(QPalette::Window, QBrush(pixmap));
     this->setPalette(palette);
 
-    helpAction = new QAction(QIcon(tr(":/images/icon/help-icon")), "帮助", this);
+    QAction *helpAction = new QAction(QIcon(tr(":/images/icon/help-icon")), "帮助", this);
     helpAction->setShortcut(QKeySequence::HelpContents);
     helpAction->setStatusTip("点击以获取帮助");
 
     QMenu *helpMenu = menuBar()->addMenu("关于程序");
     helpMenu->addAction(helpAction);
 
-    killButton = new CustomizedButton("杀掉红蜘蛛");
-    recoverButton = new CustomizedButton("恢复红蜘蛛");
-    delayButton = new CustomizedButton("定时关闭");
+    CustomizedButton *killButton = new CustomizedButton("杀掉红蜘蛛");
+    CustomizedButton *recoverButton = new CustomizedButton("恢复红蜘蛛");
+    CustomizedButton *delayButton = new CustomizedButton("定时关闭");
 
     connect(helpAction, &QAction::triggered, this, &MainWindow::getHelp);
     connect(killButton, &CustomizedButton::clicked, this, &MainWindow::killProcess);
     connect(recoverButton, &CustomizedButton::clicked, this, &MainWindow::recoverProcess);
     connect(delayButton, &CustomizedButton::clicked, this, &MainWindow::delayedOff);
 
-    layout = new QVBoxLayout;
+    QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(killButton);
     layout->addWidget(recoverButton);
     layout->addWidget(delayButton);

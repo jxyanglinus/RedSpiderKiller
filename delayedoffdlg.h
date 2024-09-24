@@ -33,7 +33,6 @@ private:
     QString appPath; // 红蜘蛛路径
     QString editedPath; // 杀死后红蜘蛛软件名称将被修改，并存放于此路径
     // 以下为窗口部件
-    QVBoxLayout *layout = nullptr;
     QPushButton *button = nullptr;
 private:
     void delayedOffExec();

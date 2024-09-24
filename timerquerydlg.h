@@ -17,10 +17,6 @@ public:
     int getCountdown();
 private:
     int countdown = 0;
-    // 以下为窗口部件
-    QHBoxLayout *layout = nullptr;
-    QSpinBox *spinBox = nullptr;
-    QPushButton *confirm = nullptr;
 };
 
 #endif // TIMERQUERYDLG_H

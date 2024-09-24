@@ -11,7 +11,7 @@ DelayedOffDlg::DelayedOffDlg(QWidget *parent, Qt::WindowFlags f)
     button->setFont(QFont("黑体", 15));
     connect(button, &QPushButton::clicked, this, &DelayedOffDlg::delayedOffExec);
 
-    layout = new QVBoxLayout;
+    QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(button);
     this->setLayout(layout);
 }
