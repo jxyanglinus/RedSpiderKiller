@@ -29,25 +29,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     CustomizedButton *delayButton = new CustomizedButton("定时关闭");
     delayButton->setStatusTip("设定一个倒计时，倒计时结束将自动杀死红蜘蛛");
 
-    QCheckBox *topCheck = new QCheckBox("保持为顶层窗口");
-    topCheck->setFont(QFont("黑体", 15));
-    topCheck->setStatusTip("设置为顶层窗口，以便在教师控制时进行仍能杀死红蜘蛛");
-
     connect(helpAction, &QAction::triggered, this, &MainWindow::getHelp);
     connect(killButton, &CustomizedButton::clicked, this, &MainWindow::killProcess);
     connect(recoverButton, &CustomizedButton::clicked, this, &MainWindow::recoverProcess);
     connect(delayButton, &CustomizedButton::clicked, this, &MainWindow::delayedOff);
-    connect(topCheck, &QCheckBox::stateChanged, this, &MainWindow::setWinLevel);
-    topCheck->setChecked(true);
 
     QGridLayout *layout = new QGridLayout;
-    layout->addWidget(killButton, 0, 0, 2, 2, Qt::AlignCenter);
-    layout->addWidget(recoverButton, 0, 2, 2, 2, Qt::AlignCenter);
-    layout->addWidget(delayButton, 2, 0, 2, 2, Qt::AlignCenter);
-    layout->addWidget(topCheck, 2, 2, 2, 2, Qt::AlignCenter);
-    layout->setHorizontalSpacing(50);
-    layout->setVerticalSpacing(50);
-    layout->setContentsMargins(25, 25, 25, 25);
+    layout->addWidget(killButton, 0, 0, 1, 1, Qt::AlignCenter);
+    layout->addWidget(recoverButton, 1, 0, 1, 1, Qt::AlignCenter);
+    layout->addWidget(delayButton, 2, 0, 1, 1, Qt::AlignCenter);
+    layout->setHorizontalSpacing(20);
+    layout->setVerticalSpacing(20);
+    layout->setContentsMargins(50, 50, 50, 50);
     QWidget *widget = new QWidget;
     widget->setLayout(layout);
     this->setCentralWidget(widget);
@@ -121,16 +114,6 @@ void MainWindow::delayedOff() {
         if (offDialog.exec() == QDialog::Rejected) {
             QMessageBox::information(this, "提示", "已取消");
         }
-    }
-}
-
-void MainWindow::setWinLevel(int state) {
-    if (state == Qt::Checked) {
-        this->setWindowFlags(this->windowFlags() | Qt::WindowStaysOnTopHint);
-        this->show();
-    } else if (state == Qt::Unchecked) {
-        this->setWindowFlags(this->windowFlags() & ~Qt::WindowStaysOnTopHint);
-        this->show();
     }
 }
 
