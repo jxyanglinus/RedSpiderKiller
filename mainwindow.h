@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QString>
 #include <QGridLayout>
-#include <QCheckBox>
 #include <QAction>
 #include <QMenu>
 #include <QMenuBar>
